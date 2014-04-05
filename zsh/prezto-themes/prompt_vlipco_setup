@@ -1,0 +1,107 @@
+# Print line before executing a command
+preexec () {print -Pn "\e]2; %~/ \a"; echo}
+
+current_dir_path() {
+    CURRENT=$(print -P %3~)
+    echo "${CURRENT}"
+}
+
+# Load dependencies.
+pmodload 'helper'
+
+function prompt_vlipco_precmd {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+
+  # Get Git repository information.
+  if (( $+functions[git-info] )); then
+    git-info
+  fi
+
+  echo # new line before showing prompt
+}
+
+function colored_host {
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo "%K{blue}%F{white} %m %f%k"
+  else
+    echo "%K{green}%F{white} %m %f%k"
+  fi
+}
+
+function colored_pwd {
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo "%F{blue}$(current_dir_path)%f"
+  else
+    echo "%F{green}$(current_dir_path)%f"
+  fi
+}
+
+function colored_pointer {
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo "%(!.%F{red}.%F{green})${1:-☻ }%f "
+  else
+    echo ""
+  fi
+}
+
+function git_color {
+  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+    echo '%F{gree}' #"{ git: %F{green}${git_info[rprompt]}%f }"
+  else
+    echo '%F{blue}' #"{ git: %F{blue}${git_info[rprompt]}%f }"
+  fi  
+}
+
+function prompt_vlipco_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz add-zsh-hook
+
+  # Add hook for calling git-info before each command.
+  add-zsh-hook precmd prompt_vlipco_precmd
+
+  KEYTIMEOUT=1 # prevent mode shift lag
+
+  # Set editor-info parameters.
+  zstyle ':prezto:module:editor:info:completing' format '%B%F{red}...%f%b'
+  zstyle ':prezto:module:editor:info:keymap:primary' format 'I'
+  zstyle ':prezto:module:editor:info:keymap:primary:overwrite' format 'R'
+  zstyle ':prezto:module:editor:info:keymap:alternate' format 'N'
+
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info:keys' format \
+    'rprompt' "$(git_color)"'%b%A%B%S%a%d%m%r%U%u%f |'
+
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:action' format '%s'
+  zstyle ':prezto:module:git:info:added' format ' ✚'
+  zstyle ':prezto:module:git:info:ahead' format ' ⬆'
+  zstyle ':prezto:module:git:info:behind' format ' ⬇'
+  zstyle ':prezto:module:git:info:branch' format '%b'
+  zstyle ':prezto:module:git:info:commit' format ' %.7c'
+  zstyle ':prezto:module:git:info:deleted' format ' ✖'
+  zstyle ':prezto:module:git:info:modified' format ' ✱'
+  zstyle ':prezto:module:git:info:position' format ' :%p'
+  zstyle ':prezto:module:git:info:renamed' format ' ➜'
+  zstyle ':prezto:module:git:info:stashed' format ' ✭'
+  zstyle ':prezto:module:git:info:unmerged' format ' ═'
+  zstyle ':prezto:module:git:info:untracked' format ' ◼'
+
+  USER_HOST_INFO="%(!.%F{red}.)%n%f at $(colored_host)"
+
+  EXIT_STATUS_IF_FAILED='%(?..→%?)'
+
+  EDITOR_PROMPT=''
+
+  PROMPT='${editor_info[keymap]}${editor_info[overwrite]} | $(colored_pwd) $(colored_pointer)'
+  
+  RPROMPT='$EXIT_STATUS_IF_FAILED ${git_info[rprompt]} $USER_HOST_INFO '
+  
+  SPROMPT='zsh: correct %F{red}%R%f to %F{yellow}%r%f [nyae]? '
+}
+
+prompt_vlipco_setup "$@"
