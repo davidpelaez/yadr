@@ -1,5 +1,5 @@
 # Load rbenv if available
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+if which rbenv &> /dev/null; then eval "$(rbenv init -)"; fi
 # Load any user customizations prior to load
 #
 if [ -d $HOME/.zsh.before/ ]; then
