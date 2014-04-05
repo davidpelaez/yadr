@@ -54,17 +54,16 @@ function git_color {
 }
 
 function prompt_vlipco_setup {
-  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    # Nothing yet
-  else
-    # Change some syntax highlight defaults in local
-    # ref: http://bit.ly/1ht4297
+
+  # Change some syntax highlight defaults in local
+  # ref: http://bit.ly/1ht4297
+  if [ $(whoami) != "root" ]; then
     ZSH_HIGHLIGHT_STYLES[alias]="fg=blue"
     ZSH_HIGHLIGHT_STYLES[builtin]="fg=blue"
     ZSH_HIGHLIGHT_STYLES[function]="fg=blue"
     ZSH_HIGHLIGHT_STYLES[precommand]="fg=blue,underline"
     ZSH_HIGHLIGHT_STYLES[hashed-command]="fg=blue"
-  fi 
+  fi
 
 
   setopt LOCAL_OPTIONS
@@ -103,9 +102,6 @@ function prompt_vlipco_setup {
   zstyle ':prezto:module:git:info:stashed' format ' ✭'
   zstyle ':prezto:module:git:info:unmerged' format ' ═'
   zstyle ':prezto:module:git:info:untracked' format ' ◼'
-
-
-
   
 
   USER_HOST_INFO="%(!.%F{red}.)%n%f at $(colored_host)"
