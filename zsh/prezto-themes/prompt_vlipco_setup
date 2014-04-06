@@ -2,7 +2,7 @@
 preexec () {print -Pn "\e]2; %~/ \a"; echo}
 
 current_dir_path() {
-    CURRENT=$(print -P %3~)
+    CURRENT=$(print -P %2~)
     echo "${CURRENT}"
 }
 
@@ -41,7 +41,7 @@ function colored_pointer {
   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
     echo "%(!.%F{red}.%F{green})${1:-☻ }%f "
   else
-    echo ""
+    echo "» "
   fi
 }
 
@@ -61,10 +61,10 @@ function prompt_vlipco_setup {
     ZSH_HIGHLIGHT_STYLES[alias]="fg=blue"
     ZSH_HIGHLIGHT_STYLES[builtin]="fg=blue"
     ZSH_HIGHLIGHT_STYLES[function]="fg=blue"
+    ZSH_HIGHLIGHT_STYLES[command]="fg=blue,underline"
     ZSH_HIGHLIGHT_STYLES[precommand]="fg=blue,underline"
     ZSH_HIGHLIGHT_STYLES[hashed-command]="fg=blue"
   fi
-
 
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
