@@ -11,7 +11,6 @@ task :install => [:submodule_init, :submodules] do
   puts
 
   install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
-  install_rvm_binstubs
 
   # this has all the runcoms from this directory.
   file_operation(Dir.glob('git/*')) if want_to_install?('git configs (color, aliases)')
@@ -137,16 +136,6 @@ def run_bundle_config
   puts "Configuring Bundlers for parallel gem installation"
   puts "======================================================"
   run %{ bundle config --global jobs #{bundler_jobs} }
-  puts
-end
-
-def install_rvm_binstubs
-  puts "======================================================"
-  puts "Installing RVM Bundler support. Never have to type"
-  puts "bundle exec again! Please use bundle --binstubs and RVM"
-  puts "will automatically use those bins after cd'ing into dir."
-  puts "======================================================"
-  run %{ chmod +x $rvm_path/hooks/after_cd_bundler }
   puts
 end
 
