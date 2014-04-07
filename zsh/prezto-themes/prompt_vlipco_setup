@@ -42,10 +42,14 @@ function colored_pwd {
 }
 
 function colored_pointer {
-  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    echo "%(!.%F{red}.%F{green})${1:-☻ }%f "
+  if [ $(whoami) != "root" ]; then
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+      echo "%F{green}${1:-☻ }%f "
+    else
+      echo "» "
+    fi
   else
-    echo "» "
+    echo "%F{red}${1:-☻ }%f "
   fi
 }
 
