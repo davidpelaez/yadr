@@ -22,10 +22,14 @@ function prompt_vlipco_precmd {
 }
 
 function colored_host {
-  if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    echo "%K{blue}%F{white} %m %f%k"
+  if [ $(whoami) != "root" ]; then
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+      echo "%K{blue}%F{white} %m %f%k"
+    else
+      echo "%K{green}%F{white} %m %f%k"
+    fi
   else
-    echo "%K{green}%F{white} %m %f%k"
+    echo "%K{red}%F{white} %m %f%k"
   fi
 }
 
