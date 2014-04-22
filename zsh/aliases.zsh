@@ -154,3 +154,10 @@ alias srdmt='spring rake db:migrate db:test:prepare'
 alias sp='sprintly'
 # spb = sprintly branch - create a branch automatically based on the bug you're working on
 alias spb="git checkout -b \`sp | tail -2 | grep '#' | sed 's/^ //' | sed 's/[^A-Za-z0-9 ]//g' | sed 's/ /-/g' | cut -d"-" -f1,2,3,4,5\`"
+#Frequently used dirs
+alias vd="cd ~/Vlipco/dev"
+alias ch="cd ~/Vlipco/dev/checkout-frontend"
+alias da="cd ~/Vlipco/dev/dashboard-frontend"
+alias vt="cd ~/Vlipco/dev/temp"
+alias fd="cd ~/Documents/dev"
+alias ff="mosh root@162.243.4.231"
