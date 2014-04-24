@@ -10,6 +10,7 @@
 
 " To ensure the installation command can be run without human interaction:
 :let g:session_autosave = 'no'
+:let g:yankring_history_file = '.yankring_history'
 
 " Filetype off is required by vundle
 filetype off
