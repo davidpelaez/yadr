@@ -174,12 +174,11 @@ def install_fonts
   puts
 end
 
+
 def install_term_theme
   puts "======================================================"
   puts "Installing iTerm2 solarized theme."
   puts "======================================================"
-  run %{ /usr/libexec/PlistBuddy -c "Add :'Custom Color Presets':'Solarized Light' dict" ~/Library/Preferences/com.googlecode.iterm2.plist }
-  run %{ /usr/libexec/PlistBuddy -c "Merge 'iTerm2/Solarized Light.itermcolors' :'Custom Color Presets':'Solarized Light'" ~/Library/Preferences/com.googlecode.iterm2.plist }
   run %{ /usr/libexec/PlistBuddy -c "Add :'Custom Color Presets':'Solarized Dark' dict" ~/Library/Preferences/com.googlecode.iterm2.plist }
   run %{ /usr/libexec/PlistBuddy -c "Merge 'iTerm2/Solarized Dark.itermcolors' :'Custom Color Presets':'Solarized Dark'" ~/Library/Preferences/com.googlecode.iterm2.plist }
 
@@ -193,22 +192,10 @@ def install_term_theme
     return
   end
 
-  # Ask the user which theme he wants to install
-  message = "Which theme would you like to apply to your iTerm2 profile?"
-  color_scheme = ask message, iTerm_available_themes
-  color_scheme_file = File.join('iTerm2', "#{color_scheme}.itermcolors")
-
-  # Ask the user on which profile he wants to install the theme
+  color_scheme_file = File.join('iTerm2', "Solarized Dark.itermcolors")
   profiles = iTerm_profile_list
-  message = "I've found #{profiles.size} #{profiles.size>1 ? 'profiles': 'profile'} on your iTerm2 configuration, which one would you like to apply the Solarized theme to?"
-  profiles << 'All'
-  selected = ask message, profiles
-
-  if selected == 'All'
-    (profiles.size-1).times { |idx| apply_theme_to_iterm_profile_idx idx, color_scheme_file }
-  else
-    apply_theme_to_iterm_profile_idx profiles.index(selected), color_scheme_file
-  end
+  # apply to all profiles
+  (profiles.size-1).times { |idx| apply_theme_to_iterm_profile_idx idx, color_scheme_file }
 end
 
 def iTerm_available_themes
