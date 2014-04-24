@@ -2,8 +2,7 @@
 preexec () {print -Pn "\e]2; %~/ \a"; echo}
 
 current_dir_path() {
-    CURRENT=$(print -P %2~)
-    echo "${CURRENT}"
+    print -P %2~
 }
 
 # Load dependencies.

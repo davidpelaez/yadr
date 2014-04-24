@@ -118,17 +118,10 @@
   # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
   # instead of a/b/c/d as prefixes for patches
   mnemonicprefix = true
-	algorithm = patience
+  algorithm = patience
 [rerere]
   # Remember my merges
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
   enabled = true
 [include]
   path = .gitconfig.user
-[user]
-	email = david@vlipco.co
-	name = David Pelaez
-[github]
-	user = fpinzn
-[ghi]
-	token = 6b79389a1ffb1aa07235adbe3507604f480ad70a

@@ -233,7 +233,7 @@ def install_prezto
   run %{ ln -nfs "$HOME/.yadr/zsh/prezto" "${ZDOTDIR:-$HOME}/.zprezto" }
 
   # The prezto runcoms are only going to be installed if zprezto has never been installed
-  file_operation(Dir.glob('zsh/prezto/runcoms/z*'), :copy)
+  file_operation(Dir.glob('zsh/prezto/runcoms/z*')) # removed copy in favor or link
 
   puts
   puts "Overriding prezto ~/.zpreztorc with YADR's zpreztorc to enable additional modules..."
@@ -281,8 +281,9 @@ def file_operation(files, method = :symlink)
     puts "Target: #{target}"
 
     if File.exists?(target) && (!File.symlink?(target) || (File.symlink?(target) && File.readlink(target) != source))
-      puts "[Overwriting] #{target}...leaving original at #{target}.backup..."
-      run %{ mv "$HOME/.#{file}" "$HOME/.#{file}.backup" }
+      puts "!!! [Overwriting] #{target}...leaving original at yadr-saved/#{file}.backup..."
+      run %{ mkdir -p "$HOME/yadr-install-backups" }
+      run %{ mv "$HOME/.#{file}" "$HOME/yadr-install-backups/#{file}.backup" }
     end
 
     if method == :symlink
