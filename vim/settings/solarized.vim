@@ -53,7 +53,7 @@ hi! PreProc gui=bold
 " valued riffs on the background color, making
 " everything play together just a little more nicely.
 "hi! VertSplit guifg=#003745 cterm=NONE term=NONE ctermfg=NONE ctermbg=NONE
-hi! VertSplit ctermfg=8
+hi! VertSplit ctermfg=8 ctermbg=NONE
 hi! LineNR guifg=#52737B gui=bold guibg=NONE ctermbg=NONE
 " hi! link NonText VertSplit
 hi! NonText ctermfg=8 ctermbg=8
