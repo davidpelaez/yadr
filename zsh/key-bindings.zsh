@@ -8,3 +8,7 @@ bindkey '^r' history-incremental-search-backward    # [Ctrl-r] - Search backward
 # emacs style
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
+
+source ~/.yadr/zsh/opp/opp.zsh
+source ~/.yadr/zsh/opp/opp/*.zsh
+
