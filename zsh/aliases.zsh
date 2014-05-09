@@ -145,19 +145,9 @@ alias srdm='spring rake db:migrate'
 alias srdt='spring rake db:migrate'
 alias srdmt='spring rake db:migrate db:test:prepare'
 
-# Sprintly - https://github.com/nextbigsoundinc/Sprintly-GitHub
-alias sp='sprintly'
-# spb = sprintly branch - create a branch automatically based on the bug you're working on
-#Frequently used dirs
-alias vd="cd ~/Vlipco/dev"
-alias ch="cd ~/Vlipco/dev/checkout-frontend"
-alias da="cd ~/Vlipco/dev/dashboard-frontend"
-alias vt="cd ~/Vlipco/dev/temp"
-alias fd="cd ~/Documents/dev"
-alias ff="mosh root@162.243.4.231"
-alias vv='cd ~/versioned'
-alias aws='aws-creds shell stack'
-alias ~~='/Volumes/User/'
-alias br='bundle exec ruby'
-alias bs='bundle exec rspec'
-alias vs='cd ~/.yadr/vim/settings; ls .'
+if [[ "`uname`" == "Darwin" ]]; then
+  # OS X specific aliases
+
+  # List all running virtualbox vms
+  alias vms='VBoxManage list vms'
+fi
