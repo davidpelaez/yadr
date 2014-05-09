@@ -149,5 +149,5 @@ if [[ "`uname`" == "Darwin" ]]; then
   # OS X specific aliases
 
   # List all running virtualbox vms
-  alias vms='VBoxManage list vms'
+  alias vms='VBoxManage list runningvms'
 fi
