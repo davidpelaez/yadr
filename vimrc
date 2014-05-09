@@ -109,4 +109,7 @@ set sidescroll=1
 
 
 " ================ Custom Settings ========================
-so ~/.yadr/vim/settings.vim
+
+for fpath in split(globpath('~/.vim/settings', '*.vim'), '\n')
+  exe 'source' fpath
+endfor
