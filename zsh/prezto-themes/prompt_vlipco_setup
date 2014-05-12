@@ -1,8 +1,35 @@
 # Print line before executing a command
-preexec () {print -Pn "\e]2; %~/ \a"; echo}
+preexec () {
+  print -Pn "\e]2; %~/ \a"
+  echo
+}
 
-current_dir_path() {
+refresh-pane-title() {
+  USER_HOST_INFO="%n at %m"
+  
+
+  NEW_PANE_TITLE="$USER_HOST_INFO${git_info[rprompt]}"
+
+  # Use flags for zsh prompt expansion
+  NEW_PANE_TITLE=${(%%)NEW_PANE_TITLE}
+
+  set-pane-title "$NEW_PANE_TITLE"
+}
+
+current-dir-path() {
     print -P %2~
+}
+
+set-pane-title() {
+  echo -e '\033]2;'$1'\033\\'
+}
+
+set-window-title() {
+   printf "\033k$1\033\\"
+}
+
+pad() {
+  # pad with awk $1 to Have $2 width
 }
 
 # Load dependencies.
@@ -20,23 +47,11 @@ function prompt_vlipco_precmd {
   echo # new line before showing prompt
 }
 
-function colored_host {
-  if [ $(whoami) != "root" ]; then
-    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-      echo "%K{blue}%F{white} %m %f%k"
-    else
-      echo "%K{green}%F{white} %m %f%k"
-    fi
-  else
-    echo "%K{red}%F{white} %m %f%k"
-  fi
-}
-
 function colored_pwd {
   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-    echo "%F{blue}$(current_dir_path)%f"
+    echo "%F{blue}$(current-dir-path)%f"
   else
-    echo "%F{green}$(current_dir_path)%f"
+    echo "%F{green}$(current-dir-path)%f"
   fi
 }
 
@@ -93,7 +108,7 @@ function prompt_vlipco_setup {
 
   # Set git-info parameters.
   zstyle ':prezto:module:git:info:keys' format \
-    'rprompt' "$(git_color)"'%b%A%B%S%a%d%m%r%U%u%f |'
+    'rprompt' ' • %b%A%B%S%a%d%m%r%U%u'
 
   zstyle ':prezto:module:git:info' verbose 'yes'
   zstyle ':prezto:module:git:info:action' format '%s'
@@ -110,18 +125,13 @@ function prompt_vlipco_setup {
   zstyle ':prezto:module:git:info:unmerged' format ' ═'
   zstyle ':prezto:module:git:info:untracked' format ' ◼'
   
-
-  USER_HOST_INFO="%(!.%F{red}.)%n%f at $(colored_host)"
-
-  EXIT_STATUS_IF_FAILED='%(?..→%?)'
-
   EDITOR_PROMPT=''
-
-  PROMPT='${editor_info[keymap]}${editor_info[overwrite]} | $(colored_pwd) $(colored_pointer)'
-  
-  RPROMPT='$EXIT_STATUS_IF_FAILED ${git_info[rprompt]} $USER_HOST_INFO '
+  RPROMPT=''
+  PROMPT='$(refresh-pane-title)${editor_info[keymap]}${editor_info[overwrite]} | $(colored_pwd) %(?..→%? )$(colored_pointer)'
   
   SPROMPT='zsh: correct %F{red}%R%f to %F{yellow}%r%f [nyae]? '
+
+  refresh-pane-title
 }
 
 prompt_vlipco_setup "$@"
