@@ -1,15 +1,35 @@
 " These bundles introduce new textobjects into vim,
 " For example the Ruby one introduces the 'r' text object
 " such that 'var' gives you Visual Around Ruby
+
+" A text object for manipulating blocks based on their indentation
 Bundle "austintaylor/vim-indentobject"
+
+" Text objects for manipulating ruby symbol variables
 Bundle "bootleq/vim-textobj-rubysymbol"
+
+" makes operating on columns of code conceptually simpler and reduces keystrokes
 Bundle "coderifous/textobj-word-column.vim"
-Bundle "kana/vim-textobj-datetime"
+
+" Bundle "kana/vim-textobj-datetime"
+
+" text objects (ae and ie by default) to select the entire content of a buffer
 Bundle "kana/vim-textobj-entire"
-Bundle "kana/vim-textobj-function"
+
+" Bundle "kana/vim-textobj-function"
+
+" create your own text objects without pain
 Bundle "kana/vim-textobj-user"
+
+" a_ and i_ respectively. deal with the words_like_this
 Bundle "lucapette/vim-textobj-underscore"
-Bundle "nathanaelkane/vim-indent-guides"
+
+" Bundle "nathanaelkane/vim-indent-guides"
+
 Bundle "nelstrom/vim-textobj-rubyblock"
-Bundle "thinca/vim-textobj-function-javascript"
+
+" Text objects for functions in javascript
+" Bundle "thinca/vim-textobj-function-javascript"
+
+" text-object 'a' (argument)
 Bundle "vim-scripts/argtextobj.vim"

@@ -1,5 +1,13 @@
+" color colornames and codes
 Bundle "chrisbra/color_highlight.git"
+
 Bundle "skwp/vim-colors-solarized"
+
+" statusline/tabline for Vim
 Bundle "itchyny/lightline.vim"
+
+" http://tmux.svn.sourceforge.net/viewvc/tmux/trunk/examples/tmux.vim?revision=2783&view=markup ??
 Bundle "jby/tmux.vim.git"
+
+" provides a visual representation of the location marks. 
 Bundle "xsunsmile/showmarks.git"

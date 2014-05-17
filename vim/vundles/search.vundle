@@ -1,6 +1,19 @@
+" jumps to any location specified by two characters
 Bundle "justinmk/vim-sneak"
+
+" run ag from vim, and shows the results in a split window
 Bundle "rking/ag.vim"
+
+" helps to get oriented when searching forward and backward
+" redefines 6 search commands (/,?,n,N,*,#)
 Bundle "vim-scripts/IndexedSearch"
+
+" select some text using Vim's visual mode and then hit *
+" and # to search for it elsewhere in the file
 Bundle "nelstrom/vim-visual-star-search"
+
+" Use :Gsearch to get a buffer window of your search results then you can make the replacements inside the buffer window using traditional tools (s/foo/bar/) and invoke :Greplace to make your changes.
 Bundle "skwp/greplace.vim"
+
+" EasyMotion provides a much simpler way to use some motions in vim
 Bundle "skwp/vim-easymotion"

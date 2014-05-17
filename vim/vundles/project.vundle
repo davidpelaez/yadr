@@ -1,5 +1,10 @@
 Bundle "jistr/vim-nerdtree-tabs.git"
 Bundle "scrooloose/nerdtree.git"
 Bundle "kien/ctrlp.vim"
+
+" Vim scripts that are used by most of the Vim plug-ins
+" yet don't really belong with any single one of the plug-ins
+" vim-session dependency
 Bundle "xolox/vim-misc"
+
 Bundle "xolox/vim-session"

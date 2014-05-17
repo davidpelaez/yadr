@@ -1,10 +1,23 @@
-Bundle "ecomba/vim-ruby-refactoring"
+" Bundle "ecomba/vim-ruby-refactoring"
+
 Bundle "tpope/vim-rails.git"
 Bundle "tpope/vim-rake.git"
-Bundle "tpope/vim-rvm.git"
+
+" Bundle "tpope/vim-rvm.git"
 Bundle "vim-ruby/vim-ruby.git"
+
+" improved syntax highlighting for rspec. This is pulled from 
 Bundle "Keithbsmiley/rspec.vim"
-Bundle "skwp/vim-iterm-rspec"
+
+" sends a command from vim to run your rspec in your existing iTerm window
+" Bundle "skwp/vim-iterm-rspec"
+
+" While inside a ruby file, invoke the shortcut (supplied as Ctrl-S), 
+" and the corresponding spec will be open
 Bundle "skwp/vim-spec-finder"
+
+" convert to newer hash syntax :ChangeHashSyntax
 Bundle "ck3g/vim-change-hash-syntax"
+
+" vim goodies for bundler :Bundler
 Bundle "tpope/vim-bundler"

@@ -1,28 +1,79 @@
+" change from one liners to block constructs in many langs
 Bundle "AndrewRadev/splitjoin.vim"
+
+" automatic closing of quotes, parenthesis, brackets
 Bundle "Raimondi/delimitMate"
-Bundle "Shougo/neocomplete.git"
-Bundle "briandoll/change-inside-surroundings.vim.git"
+
+" neo-completion with cache
+Bundle "Shougo/neocomplete"
+
+Bundle "briandoll/change-inside-surroundings.vim"
+
+" Sometimes, it's useful to line up text
 Bundle "godlygeek/tabular"
-Bundle "tomtom/tcomment_vim.git"
-Bundle "vim-scripts/camelcasemotion.git"
-Bundle "vim-scripts/matchit.zip.git"
+
+" file-type sensible comments for Vim
+Bundle "tomtom/tcomment_vim"
+
+" camel and underscore scare motion with ',w', ',b' and ',e'
+Bundle "vim-scripts/camelcasemotion"
+
+
+" Bundle "vim-scripts/matchit.zip"
+
 Bundle "terryma/vim-multiple-cursors"
+
+" looking documentation on the word under the cursor
 Bundle "Keithbsmiley/investigate.vim"
+
+" focus on a selected region while making the rest inaccessible
 Bundle "chrisbra/NrrwRgn"
-Bundle "MarcWeber/vim-addon-mw-utils.git"
+
+" wtf's this? vim: interpret a file by function and cache file automatically
+" Bundle "MarcWeber/vim-addon-mw-utils"
+
+" enable opening a file in a given line, e.g. vim file:line
 Bundle "bogado/file-line"
-Bundle "mattn/webapi-vim.git"
+
+Bundle "mattn/webapi-vim"
+
+" visualize your Vim undo tree
 Bundle "sjl/gundo.vim"
+
 Bundle "skwp/YankRing.vim"
-Bundle "tomtom/tlib_vim.git"
+
+" utils for other plugins
+Bundle "tomtom/tlib_vim"
+
+" finger corections and camel/snake coercion
 Bundle "tpope/vim-abolish"
-Bundle "tpope/vim-endwise.git"
+
+" end certain structures automatically
+Bundle "tpope/vim-endwise"
+
+
+" helps with tag writing, e.g. html
 Bundle "tpope/vim-ragtag"
-Bundle "tpope/vim-repeat.git"
-Bundle "tpope/vim-surround.git"
+
+" repeat with . for plugins
+Bundle "tpope/vim-repeat"
+
+" sorround with parenthesis, tags, etc.
+Bundle "tpope/vim-surround"
+
 Bundle "tpope/vim-unimpaired"
-Bundle "vim-scripts/AnsiEsc.vim.git"
-Bundle "vim-scripts/AutoTag.git"
+
+" better looks for escape sequences
+" Bundle "vim-scripts/AnsiEsc.vim"
+
+" ctags? resourced on each save
+" Bundle "vim-scripts/AutoTag"
+
+" last position, how?
 Bundle "vim-scripts/lastpos.vim"
+
+" single sudo edit, e.g vim sudo:/etc/passwd algo works with :e
 Bundle "vim-scripts/sudo.vim"
+
+" CtrlR faithfully emulates the reverse search functionality 
 Bundle "goldfeld/ctrlr.vim"

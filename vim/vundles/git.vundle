@@ -1,4 +1,9 @@
-Bundle "gregsexton/gitv"
+" give you a similar set of functionality as a repository viewer
+" Bundle "gregsexton/gitv"
+
+" vimscript for creating gists
 Bundle "mattn/gist-vim"
+
+" may very well be the best Git wrapper of all time
 Bundle "tpope/vim-fugitive"
 Bundle "tpope/vim-git"
