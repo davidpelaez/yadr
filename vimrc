@@ -113,3 +113,4 @@ set sidescroll=1
 for fpath in split(globpath('~/.vim/settings', '*.vim'), '\n')
   exe 'source' fpath
 endfor
+set timeoutlen=1000 ttimeoutlen=0

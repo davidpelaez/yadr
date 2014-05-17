@@ -1,23 +1,20 @@
 # Print line before executing a command
+
 preexec () {
   print -Pn "\e]2; %~/ \a"
   echo
 }
 
-refresh-pane-title() {
+function refresh-pane-title() {
   USER_HOST_INFO="%n at %m"
-  
-
   NEW_PANE_TITLE="$USER_HOST_INFO${git_info[rprompt]}"
-
   # Use flags for zsh prompt expansion
   NEW_PANE_TITLE=${(%%)NEW_PANE_TITLE}
-
   set-pane-title "$NEW_PANE_TITLE"
 }
 
 current-dir-path() {
-    print -P %2~
+  print -P %2~
 }
 
 set-pane-title() {
@@ -25,7 +22,7 @@ set-pane-title() {
 }
 
 set-window-title() {
-   printf "\033k$1\033\\"
+  printf "\033k$1\033\\"
 }
 
 pad() {
@@ -33,7 +30,7 @@ pad() {
 }
 
 # Load dependencies.
-pmodload 'helper'
+#pmodload 'helper'
 
 function prompt_vlipco_precmd {
   setopt LOCAL_OPTIONS
@@ -72,7 +69,7 @@ function git_color {
     echo '%F{gree}' #"{ git: %F{green}${git_info[rprompt]}%f }"
   else
     echo '%F{blue}' #"{ git: %F{blue}${git_info[rprompt]}%f }"
-  fi  
+  fi
 }
 
 function prompt_vlipco_setup {
@@ -108,7 +105,7 @@ function prompt_vlipco_setup {
 
   # Set git-info parameters.
   zstyle ':prezto:module:git:info:keys' format \
-    'rprompt' ' • %b%A%B%S%a%d%m%r%U%u'
+      'rprompt' ' • %b%A%B%S%a%d%m%r%U%u'
 
   zstyle ':prezto:module:git:info' verbose 'yes'
   zstyle ':prezto:module:git:info:action' format '%s'
@@ -124,14 +121,16 @@ function prompt_vlipco_setup {
   zstyle ':prezto:module:git:info:stashed' format ' ✭'
   zstyle ':prezto:module:git:info:unmerged' format ' ═'
   zstyle ':prezto:module:git:info:untracked' format ' ◼'
-  
+
   EDITOR_PROMPT=''
   RPROMPT=''
-  PROMPT='$(refresh-pane-title)${editor_info[keymap]}${editor_info[overwrite]} | $(colored_pwd) %(?..→%? )$(colored_pointer)'
-  
-  SPROMPT='zsh: correct %F{red}%R%f to %F{yellow}%r%f [nyae]? '
+  #$refres pane title
+  PROMPT='${editor_info[keymap]}${editor_info[overwrite]} | $(colored_pwd) %(?..→%? )$(colored_pointer)'
+
+  SPROMPT='correct %F{red}%R%f to %F{yellow}%r%f [nyae]? '
 
   refresh-pane-title
 }
 
 prompt_vlipco_setup "$@"
+
