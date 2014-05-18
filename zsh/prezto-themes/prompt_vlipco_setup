@@ -72,6 +72,18 @@ function git_color {
   fi
 }
 
+function colored_host {
+  if [ $(whoami) != "root" ]; then
+    if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+      echo "%K{blue}%F{white} %m %f%k"
+    else
+      echo "%K{green}%F{white} %m %f%k"
+    fi
+  else
+    echo "%K{red}%F{white} %m %f%k"
+  fi
+}
+
 function prompt_vlipco_setup {
 
   # Change some syntax highlight defaults in local
@@ -125,7 +137,7 @@ function prompt_vlipco_setup {
   EDITOR_PROMPT=''
   RPROMPT=''
   #$refres pane title
-  PROMPT='${editor_info[keymap]}${editor_info[overwrite]} | $(colored_pwd) %(?..→%? )$(colored_pointer)'
+  PROMPT='$(colored_host) ${editor_info[keymap]}${editor_info[overwrite]} | $(colored_pwd) %(?..→%? )$(colored_pointer)'
 
   SPROMPT='correct %F{red}%R%f to %F{yellow}%r%f [nyae]? '
 

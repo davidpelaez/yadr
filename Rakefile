@@ -13,39 +13,32 @@ task :install => [:submodule_init, :submodules] do
   install_homebrew if RUBY_PLATFORM.downcase.include?("darwin")
 
   # this has all the runcoms from this directory.
-  file_operation(Dir.glob('git/*')) if want_to_install?('git configs (color, aliases)')
-  file_operation(Dir.glob('irb/*')) if want_to_install?('irb/pry configs (more colorful)')
-  file_operation(Dir.glob('ruby/*')) if want_to_install?('rubygems config (faster/no docs)')
-  file_operation(Dir.glob('ctags/*')) if want_to_install?('ctags config (better js/ruby support)')
-  file_operation(Dir.glob('tmux/*')) if want_to_install?('tmux config')
-  file_operation(Dir.glob('vimify/*')) if want_to_install?('vimification of command line tools')
-  if want_to_install?('vim configuration (highly recommended)')
-    file_operation(Dir.glob('{vim,vimrc}'))
-    Rake::Task["install_vundle"].execute
+  file_operation Dir.glob('git/*')
+  file_operation Dir.glob('irb/*')
+  file_operation Dir.glob('ruby/*')
+  file_operation Dir.glob('ctags/*')
+  file_operation Dir.glob('tmux/*')
+  file_operation Dir.glob('vimify/*')
+  
+  file_operation(Dir.glob('{vim,vimrc}'))
+  Rake::Task["install_vundle"].execute
+
+  install_prezto
+
+  if RUBY_PLATFORM.downcase.include?("darwin")
+    install_fonts
+    install_term_theme
   end
-
-  Rake::Task["install_prezto"].execute
-
-  install_fonts if RUBY_PLATFORM.downcase.include?("darwin")
-
-  install_term_theme if RUBY_PLATFORM.downcase.include?("darwin")
 
   run_bundle_config
 
   success_msg("installed")
 end
 
-task :install_prezto do
-  if want_to_install?('zsh enhancements & prezto')
-    install_prezto
-  end
-end
-
 task :update do
-  Rake::Task["vundle_migration"].execute if needs_migration_to_vundle?
-  Rake::Task["install"].execute
   #TODO: for now, we do the same as install. But it would be nice
   #not to clobber zsh files
+  Rake::Task["install"].execute
 end
 
 task :submodule_init do
@@ -70,25 +63,6 @@ task :submodules do
   end
 end
 
-desc "Performs migration from pathogen to vundle"
-task :vundle_migration do
-  puts "======================================================"
-  puts "Migrating from pathogen to vundle vim plugin manager. "
-  puts "This will move the old .vim/bundle directory to"
-  puts ".vim/bundle.old and replacing all your vim plugins with"
-  puts "the standard set of plugins. You will then be able to "
-  puts "manage your vim's plugin configuration by editing the "
-  puts "file .vim/vundles.vim"
-  puts "======================================================"
-
-  Dir.glob(File.join('vim', 'bundle','**')) do |sub_path|
-    run %{git config -f #{File.join('.git', 'config')} --remove-section submodule.#{sub_path}}
-    # `git rm --cached #{sub_path}`
-    FileUtils.rm_rf(File.join('.git', 'modules', sub_path))
-  end
-  FileUtils.mv(File.join('vim','bundle'), File.join('vim', 'bundle.old'))
-end
-
 desc "Runs Vundle installer in a clean vim environment"
 task :install_vundle do
   puts "======================================================"
@@ -111,8 +85,8 @@ end
 
 task :default => 'install'
 
-
 private
+
 def run(cmd)
   puts "[Running] #{cmd}"
   `#{cmd}` unless ENV['DEBUG']
@@ -129,8 +103,7 @@ def number_of_cores
 end
 
 def run_bundle_config
-  return unless system("which bundle")
-
+  # bundle command is expected to be found
   bundler_jobs = number_of_cores - 1
   puts "======================================================"
   puts "Configuring Bundlers for parallel gem installation"
@@ -211,21 +184,6 @@ def iTerm_profile_list
   profiles
 end
 
-def ask(message, values)
-  puts message
-  while true
-    values.each_with_index { |val, idx| puts " #{idx+1}. #{val}" }
-    selection = STDIN.gets.chomp
-    if (Float(selection)==nil rescue true) || selection.to_i < 0 || selection.to_i > values.size+1
-      puts "ERROR: Invalid selection.\n\n"
-    else
-      break
-    end
-  end
-  selection = selection.to_i-1
-  values[selection]
-end
-
 def install_prezto
   puts
   puts "Installing Prezto (ZSH Enhancements)..."
@@ -261,15 +219,6 @@ def install_prezto
   end
 end
 
-def want_to_install? (section)
-  if ENV["ASK"]=="true"
-    puts "Would you like to install configuration files for: #{section}? [y]es, [n]o"
-    STDIN.gets.chomp == 'y'
-  else
-    true
-  end
-end
-
 def file_operation(files, method = :symlink)
   files.each do |f|
     file = f.split('/').last
@@ -296,8 +245,10 @@ def file_operation(files, method = :symlink)
     # This modifies zshrc to load all of yadr's zsh extensions.
     # Eventually yadr's zsh extensions should be ported to prezto modules.
     if file == 'zshrc'
-      File.open(target, 'a') do |zshrc|
-        zshrc.puts('for config_file ($HOME/.yadr/zsh/*.zsh) source $config_file')
+      unless File.readlines(target).grep(/yadr/).any?
+        File.open(target, 'a') do |zshrc|
+          zshrc.puts('for config_file ($HOME/.yadr/zsh/*.zsh) source $config_file')
+        end
       end
     end
 
@@ -305,11 +256,6 @@ def file_operation(files, method = :symlink)
     puts
   end
 end
-
-def needs_migration_to_vundle?
-  File.exists? File.join('vim', 'bundle', 'tpope-vim-pathogen')
-end
-
 
 def list_vim_submodules
   result=`git submodule -q foreach 'echo $name"||"\`git remote -v | awk "END{print \\\\\$2}"\`'`.select{ |line| line =~ /^vim.bundle/ }.map{ |line| line.split('||') }
@@ -326,13 +272,6 @@ def apply_theme_to_iterm_profile_idx(index, color_scheme_path)
 end
 
 def success_msg(action)
-  puts ""
-  puts "   _     _           _         "
-  puts "  | |   | |         | |        "
-  puts "  | |___| |_____  __| | ____   "
-  puts "  |_____  (____ |/ _  |/ ___)  "
-  puts "   _____| / ___ ( (_| | |      "
-  puts "  (_______\_____|\____|_|      "
   puts ""
   puts "YADR has been #{action}. Please restart your terminal and vim."
 end
