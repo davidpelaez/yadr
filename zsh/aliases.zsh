@@ -145,8 +145,7 @@ alias srdm='spring rake db:migrate'
 alias srdt='spring rake db:migrate'
 alias srdmt='spring rake db:migrate db:test:prepare'
 
-alias reload-tmux="tmux source-file ~/.tmux.conf"
-
+alias chx='chmod +x'
 if [[ "`uname`" == "Darwin" ]]; then
   # OS X specific aliases
 

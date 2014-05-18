@@ -26,3 +26,6 @@ Bundle "scrooloose/syntastic.git"
 
 " includes haml + sass
 Bundle "honza/vim-snippets"
+
+" dockerfile syntax highlight
+Bundle "ekalinin/Dockerfile.vim"
