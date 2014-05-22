@@ -29,3 +29,6 @@ Bundle "honza/vim-snippets"
 
 " dockerfile syntax highlight
 Bundle "ekalinin/Dockerfile.vim"
+
+" golang syntax
+Bundle "jnwhiteh/vim-golang"
