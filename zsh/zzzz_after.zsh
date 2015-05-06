@@ -6,6 +6,8 @@ bindkey -M vicmd  '\e' vi-add-next
 # Load any custom after code
 if [ -d $HOME/.zsh.after/ ]; then
   if [ "$(ls -A $HOME/.zsh.after/)" ]; then
-    for config_file ($HOME/.zsh.after/*.zsh) source $config_file
+    for config_file ($HOME/.zsh.after/*.zsh); do
+      source $config_file
+    done
   fi
 fi
